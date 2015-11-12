@@ -1,9 +1,0 @@
-<p id="notice"><%= notice %></p>
-
-<% @entries.each do |e| %>
-<p>
-  <%= link_to e, directory_path(file_param: e) %>
-</p>
-<% end %>
-
-<%= link_to 'Scan', create_directory_path(@directory) %> |

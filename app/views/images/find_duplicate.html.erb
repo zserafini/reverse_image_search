@@ -1,0 +1,18 @@
+<a href='<%= directories_browse_path( path: @current_path.dirname) %>'>..</a>
+
+<h1>Requested Image</h1>
+
+<p>
+<a href='<%= custom_image_path( path: @current_path.to_s) %>'>
+  <%= image_tag custom_image_path( path: @current_path.to_s), height: 500 %>
+</a>
+</a>
+</p>
+
+<h1>Best Matches</h1>
+
+<% @best_matches.each do |image| %>
+  <a href='<%= images_find_duplicate_path( path: image.path) %>'>
+    <%= image_tag custom_image_path( path: image.path), height: 200 %>
+  </a>
+<% end %>

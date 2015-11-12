@@ -1,46 +1,24 @@
 class ImagesController < ApplicationController
 
-  before_action :set_image, only: [:show, :edit, :update, :destroy]
-  before_action :assert_valid_dir!, only: [:create]
-
-  def index
-    @images = Image.all
-  end
+  before_action :create_temp_image!, only: [:find_duplicate]
 
   def show
+    send_file File.join(params[:path]), :disposition => 'inline'
   end
 
-  def new
-    @image = Image.new
-  end
-
-  def edit
-  end
-
-  def create
-    Dir.chdir(@image_directory)
-    image_entries = Dir.glob(['**/*.jpg', '**/*.png', '**/*.bmp', '**/*.jpeg'])
-
-    image_entries.each do |compair_path|
-      p_hash = Phashion::Image.new(compair_path).fingerprint.to_i
-      Image.create(p_hash: p_hash)
-    end
-
-    respond_to do |format|
-      if @image.save
-        format.html { redirect_to @image, notice: 'Images were successfully created.' }
-        format.json { render action: 'show', status: :created, location: @image }
-      else
-        format.html { render action: 'new' }
-        format.json { render json: @image.errors, status: :unprocessable_entity }
-      end
-    end
-
+  def find_duplicate
+    @best_matches = @temp_image.get_closest_matches
   end
 
   private
 
-  def set_image
-    @image = Image.find(params[:id])
+  def current_path
+    input_path ||= params[:path] || './'
+    @current_path ||= Pathname.new(input_path).cleanpath
+  end
+
+  def create_temp_image!
+    p_hash = Phashion::Image.new(current_path.to_s).fingerprint
+    @temp_image = Image.new(p_hash: p_hash)
   end
 end

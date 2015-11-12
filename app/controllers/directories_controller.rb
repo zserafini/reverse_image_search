@@ -2,9 +2,15 @@ class DirectoriesController < ApplicationController
   before_action :assert_valid_dir!, only: [:browse, :scan]
 
   def browse
-    @entries = Dir.entries(@current_path).
-      sort { |x, y| x <=> y }.
-      map { |e| e }
+    @thumb = params[:thumb]
+
+    @image_entries = Dir.entries(@current_path).
+      keep_if { |x| (x =~ /\.jpg$|\.png$|\.jpeg$|\.bmp$/) }.
+      sort { |x, y| x <=> y }
+
+    @directory_entries = Dir.entries(@current_path).
+      select { |f| File.directory? File.join(@current_path, f) and !(f == '.') }.
+      sort { |x, y| x <=> y }
   end
 
   def scan
@@ -21,7 +27,7 @@ class DirectoriesController < ApplicationController
 
   def assert_valid_dir!
     unless File.directory?(current_path)
-      render json: { error: "invalid dir" }
+      render json: { error: 'Bad Directory Path' }
     end
   end
 end

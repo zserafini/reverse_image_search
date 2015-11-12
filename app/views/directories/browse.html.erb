@@ -1,11 +1,24 @@
 <p id="notice"><%= notice %></p>
 
-<% @entries.each do |e| %>
-<p>
-  <%= link_to e, browse_directories_path(path: File.join(@current_path, e)) %>
-</p>
+<p><b>
+  <%= link_to 'Scan Directory', directories_scan_path(path: @current_path) %>
+  <%= link_to 'Show Thumbnails', directories_browse_path(path: @current_path, thumb: true) %>
+</b></p>
+
+
+<% @directory_entries.each do |e| %>
+  <p>
+    <%= link_to e, directories_browse_path(path: File.join(@current_path, e)) %>
+  </p>
 <% end %>
 
-<p>
-  <%= link_to 'Scan Directory', scan_directories_path(path: @current_path) %>
-</p>
+<% @image_entries.each do |e| %>
+  <p>
+    <a href='<%= images_find_duplicate_path(path: File.join(@current_path, e)) %>'>
+      <% if @thumb == 'true' %>
+        <%= image_tag custom_image_path( path: File.join(@current_path, e)), height: 100 %>
+      <% end %>
+      <%= e %>
+    </a>
+  </p>
+<% end %>
