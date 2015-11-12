@@ -11,3 +11,6 @@
  *= require_self
  *= require_tree .
  */
+.full-size-image {
+  max-height: 98vh;
+}

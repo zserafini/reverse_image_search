@@ -6,6 +6,12 @@ class ImagesController < ApplicationController
     send_file File.join(params[:path]), :disposition => 'inline'
   end
 
+  def inline
+    current_path
+    @previous_path = File.join(current_path.dirname, current_directory_entries[(current_directory_position%(current_directory_entries.count-1))+1])
+    @next_path = File.join(current_path.dirname, current_directory_entries[current_directory_position-1])
+  end
+
   def find_duplicate
     @image_count = Image.count
     @best_matches = @temp_image.get_closest_matches
@@ -30,7 +36,7 @@ class ImagesController < ApplicationController
 
   def create_temp_image!
     p_hash = Phashion::Image.new(current_path.to_s).fingerprint
-    @temp_image = Image.new(p_hash: p_hash)
+    @temp_image = Image.new(p_hash: p_hash, path: current_path.to_s)
   end
 
 end

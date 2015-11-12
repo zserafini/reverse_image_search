@@ -5,10 +5,18 @@ function leftArrowPressed() {
   <% end %>
 }
 
+function upArrowPressed() {
+  window.open('<%= directories_browse_path(path: @current_path.dirname) %>','_self');
+}
+
 function rightArrowPressed() {
   <% if @previous_path %>
     window.open('<%= images_find_duplicate_path(path: @previous_path) %>','_self');
   <% end %>
+}
+
+function downArrowPressed() {
+  window.open('<%= images_inline_path( path: @current_path.to_s) %>', '_self');
 }
 
 document.onkeydown = function(evt) {
@@ -17,8 +25,14 @@ document.onkeydown = function(evt) {
     case 37:
       leftArrowPressed();
       break;
+    case 38:
+      upArrowPressed();
+      break;
     case 39:
       rightArrowPressed();
+      break;
+    case 40:
+      downArrowPressed();
       break;
   }
 };
