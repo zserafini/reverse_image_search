@@ -1,0 +1,11 @@
+<p id="notice"><%= notice %></p>
+
+<% @entries.each do |e| %>
+<p>
+  <%= link_to e, browse_directories_path(path: File.join(@current_path, e)) %>
+</p>
+<% end %>
+
+<p>
+  <%= link_to 'Scan Directory', scan_directories_path(path: @current_path) %>
+</p>
