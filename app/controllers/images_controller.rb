@@ -7,6 +7,7 @@ class ImagesController < ApplicationController
   end
 
   def find_duplicate
+    @image_count = Image.count
     @best_matches = @temp_image.get_closest_matches
   end
 

@@ -1,13 +1,17 @@
 class FileEnqueuer
   include Sidekiq::Worker
+  sidekiq_options retry: false
 
   def perform scan_path
-    Dir.chdir(scan_path)
+    images = DirHelper.get_images(scan_path)
+    directories = DirHelper.get_dirs(scan_path)
 
-    image_entries = Dir.glob(['**/*.jpg', '**/*.png', '**/*.bmp', '**/*.jpeg'])
+    images.each do |file_path|
+      FileScanner.perform_async(File.join(scan_path, file_path))
+    end
 
-    image_entries.each do |file_path|
-      FileScanner.perform_async(scan_path, file_path)
+    directories.each do |directory_path|
+      FileEnqueuer.perform_async(File.join(scan_path, directory_path))
     end
   end
 

@@ -4,17 +4,13 @@ class DirectoriesController < ApplicationController
   def browse
     @thumb = params[:thumb]
 
-    @image_entries = Dir.entries(@current_path).
-      keep_if { |x| (x =~ /\.jpg$|\.png$|\.jpeg$|\.bmp$/) }.
-      sort { |x, y| x <=> y }
+    @image_entries = DirHelper.get_images(current_path)
 
-    @directory_entries = Dir.entries(@current_path).
-      select { |f| File.directory? File.join(@current_path, f) and !(f == '.') }.
-      sort { |x, y| x <=> y }
+    @directory_entries = DirHelper.get_dirs(current_path).unshift('..')
   end
 
   def scan
-    FileEnqueuer.perform_async(@current_path.to_s)
+    FileEnqueuer.perform_async(@current_path)
     render json: { success: "Directory Added To Scan Queue!" }
   end
 
@@ -22,7 +18,7 @@ class DirectoriesController < ApplicationController
 
   def current_path
     input_path ||= params[:path] || './'
-    @current_path ||= Pathname.new(input_path).cleanpath
+    @current_path ||= Pathname.new(input_path).cleanpath.to_s
   end
 
   def assert_valid_dir!
