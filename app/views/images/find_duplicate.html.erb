@@ -1,22 +1,18 @@
 <script>
 function leftArrowPressed() {
-  <% if @next_path %>
-    window.open('<%= images_find_duplicate_path(path: @next_path) %>','_self');
-  <% end %>
+  window.open('<%= images_find_duplicate_path(path: @image.next_image) %>','_self');
 }
 
 function upArrowPressed() {
-  window.open('<%= directories_browse_path(path: @current_path.dirname) %>','_self');
+  window.open('<%= directories_browse_path(path: @image.directory.path) %>','_self');
 }
 
 function rightArrowPressed() {
-  <% if @previous_path %>
-    window.open('<%= images_find_duplicate_path(path: @previous_path) %>','_self');
-  <% end %>
+  window.open('<%= images_find_duplicate_path(path: @image.previous_image) %>','_self');
 }
 
 function downArrowPressed() {
-  window.open('<%= images_inline_path( path: @current_path.to_s) %>', '_self');
+  window.open('<%= images_inline_path( path: @image.path) %>', '_self');
 }
 
 document.onkeydown = function(evt) {
@@ -37,19 +33,19 @@ document.onkeydown = function(evt) {
   }
 };
 </script>
-<a href='<%= directories_browse_path( path: @current_path.dirname) %>'>..</a>
+<a href='<%= directories_browse_path( path: @image.directory.path) %>'>..</a>
 
-<h1>Requested Image <%= "(#{@current_directory_position+1}/#{@current_directory_entries.count})" %></h1>
+<h1>Requested Image <%= "(#{@image.directory_position+1}/#{@image.directory.images.count})" %></h1>
 
 <p>
-  <a href='<%= custom_image_path( path: @current_path.to_s) %>'>
-    <%= image_tag custom_image_path( path: @current_path.to_s), height: 500 %>
+  <a href='<%= images_inline_path( path: @image.path) %>'>
+    <%= image_tag custom_image_path( path: @image.path), height: 500 %>
   </a>
 </p>
 
 <h1>Best Matches (5/<%= @image_count %>)</h1>
 
-<% @best_matches.each do |image| %>
+<% @image.get_closest_matches.each do |image| %>
   <a href='<%= images_find_duplicate_path( path: image.path) %>'>
     <%= image_tag custom_image_path( path: image.path), height: 200 %>
   </a>

@@ -1,12 +1,12 @@
 class DirectoriesController < ApplicationController
-  before_action :assert_valid_dir!, only: [:browse, :scan]
+  before_action :find_or_initialize_dir!, only: [:browse, :scan]
 
   def browse
     @thumb = params[:thumb]
 
-    @image_entries = DirHelper.get_images(current_path)
+    @image_entries = @directory.images
 
-    @directory_entries = DirHelper.get_dirs(current_path).unshift('..')
+    @directory_entries = @directory.sub_directories.unshift('..')
   end
 
   def scan
@@ -19,6 +19,11 @@ class DirectoriesController < ApplicationController
   def current_path
     input_path ||= params[:path] || './'
     @current_path ||= Pathname.new(input_path).cleanpath.to_s
+  end
+
+  def find_or_initialize_dir!
+    assert_valid_dir!
+    @directory = Directory.find_or_initialize_by(path: current_path)
   end
 
   def assert_valid_dir!
