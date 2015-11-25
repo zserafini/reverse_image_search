@@ -2,6 +2,8 @@ require 'sidekiq/web'
 
 ReverseImageSearch::Application.routes.draw do
 
+  root 'directories#browse'
+
   get '/directories/browse', to: 'directories#browse'
   get '/directories/scan', to: 'directories#scan'
 

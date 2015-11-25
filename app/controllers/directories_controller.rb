@@ -3,10 +3,7 @@ class DirectoriesController < ApplicationController
 
   def browse
     @thumb = params[:thumb]
-
-    @image_entries = @directory.images
-
-    @directory_entries = @directory.sub_directories.unshift('..')
+    @directory = Directory.find_or_initialize_by(path: @current_path)
   end
 
   def scan
@@ -17,7 +14,7 @@ class DirectoriesController < ApplicationController
   private
 
   def current_path
-    input_path ||= params[:path] || './'
+    input_path ||= params[:path] || Rails.root.to_s
     @current_path ||= Pathname.new(input_path).cleanpath.to_s
   end
 

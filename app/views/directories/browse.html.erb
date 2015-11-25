@@ -1,24 +1,64 @@
+<script>
+function leftArrowPressed() {
+  window.open('<%= directories_browse_path(path: @directory.next_directory) %>','_self');
+}
+
+function upArrowPressed() {
+  window.open('<%= directories_browse_path(path: @directory.parent_directory.path) %>','_self');
+}
+
+function rightArrowPressed() {
+  window.open('<%= directories_browse_path(path: @directory.previous_directory) %>','_self');
+}
+
+document.onkeydown = function(evt) {
+  evt = evt || window.event;
+  switch (evt.keyCode) {
+    case 37:
+      leftArrowPressed();
+      break;
+    case 38:
+      upArrowPressed();
+      break;
+    case 39:
+      rightArrowPressed();
+      break;
+  }
+};
+</script>
+
+
 <p id="notice"><%= notice %></p>
+
+<p> <h2> <%=@directory.path%> </h2> <p>
 
 <p><b>
   <%= link_to 'Scan Directory', directories_scan_path(path: @current_path) %>
   <%= link_to 'Show Thumbnails', directories_browse_path(path: @current_path, thumb: true) %>
+  Image Count: <%= @directory.images.count %>
 </b></p>
 
 
-<% @directory_entries.each do |e| %>
+<p>
+<%= link_to @directory.parent_directory.name, directories_browse_path(path: File.join(@current_path, @directory.parent_directory.path)) %>
+</p>
+
+<% @directory.sub_directories.each do |e| %>
   <p>
     <%= link_to e, directories_browse_path(path: File.join(@current_path, e)) %>
   </p>
 <% end %>
 
-<% @image_entries.each do |e| %>
+<% @directory.images.each do |image| %>
   <p>
-    <a href='<%= images_find_duplicate_path(path: File.join(@current_path, e)) %>'>
-      <% if @thumb == 'true' %>
-        <%= image_tag custom_image_path( path: File.join(@current_path, e)), height: 100 %>
+    <a href='<%= images_find_duplicate_path(path: image.path) %>'>
+      <% if @thumb != 'true' %>
+        <%= image_tag custom_image_path( path: image.path), height: 200 %>
       <% end %>
-      <%= e %>
+      <%= image.name %>
     </a>
+    <% if image.duplicates.any? %>
+      <span class="alert alert-danger"><i class="fa fa-files-o"></i></span>
+    <% end %>
   </p>
 <% end %>

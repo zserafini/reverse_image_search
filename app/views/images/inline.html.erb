@@ -1,5 +1,5 @@
 <script>
-function leftArrowPressed() {
+function rightArrowPressed() {
   window.open('<%= images_inline_path(path: @image.next_image) %>','_self');
 }
 
@@ -7,7 +7,7 @@ function upArrowPressed() {
   window.open('<%= images_find_duplicate_path(path: @image.path) %>','_self');
 }
 
-function rightArrowPressed() {
+function leftArrowPressed() {
   window.open('<%= images_inline_path(path: @image.previous_image) %>','_self');
 }
 
