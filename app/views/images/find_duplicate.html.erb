@@ -35,8 +35,6 @@ document.onkeydown = function(evt) {
 </script>
 <a href='<%= directories_browse_path( path: @image.directory.path) %>'>..</a>
 
-<h1><%= "#{@image.name} (#{@image.directory_position+1}/#{@image.directory.image_paths.count})" %></h1>
-
 <p>
   <a href='<%= images_inline_path( path: @image.path) %>'>
     <%= image_tag custom_image_path( path: @image.path), height: 500 %>

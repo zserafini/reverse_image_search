@@ -27,20 +27,11 @@ document.onkeydown = function(evt) {
 };
 </script>
 
-
 <p id="notice"><%= notice %></p>
 
 <p> <h2> <%=@directory.path%> </h2> <p>
 
-<p><b>
-  <%= link_to 'Scan Directory', directories_scan_path(path: @current_path) %>
-  <%= link_to 'Show Thumbnails', directories_browse_path(path: @current_path, thumb: true) %>
-  Image Count: <%= @directory.images.count %>
-</b></p>
-
-
 <p>
-<%= link_to @directory.parent_directory.name, directories_browse_path(path: File.join(@current_path, @directory.parent_directory.path)) %>
 </p>
 
 <% @directory.sub_directories.each do |e| %>
@@ -52,9 +43,7 @@ document.onkeydown = function(evt) {
 <% @directory.images.each do |image| %>
   <p>
     <a href='<%= images_find_duplicate_path(path: image.path) %>'>
-      <% if @thumb != 'true' %>
-        <%= image_tag custom_image_path( path: image.path), height: 200 %>
-      <% end %>
+      <%= image_tag custom_image_path( path: image.path), height: 200 %>
       <%= image.name %>
     </a>
     <% if image.duplicates.any? %>

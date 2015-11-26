@@ -24,10 +24,6 @@ class Image < ActiveRecord::Base
     @directory ||= Directory.find_or_initialize_by(path: dirname)
   end
 
-  def path_object
-    Pathname.new(path).cleanpath
-  end
-
   def name
     Pathname.new(path).basename.to_s
   end

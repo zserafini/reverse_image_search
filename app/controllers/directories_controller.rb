@@ -2,8 +2,10 @@ class DirectoriesController < ApplicationController
   before_action :find_or_initialize_dir!, only: [:browse, :scan]
 
   def browse
-    @thumb = params[:thumb]
     @directory = Directory.find_or_initialize_by(path: @current_path)
+    @scan_link = directories_scan_path(path: @current_path)
+    @parent_directory = directories_browse_path(path: @directory.dirname)
+    @name = @directory.name
   end
 
   def scan

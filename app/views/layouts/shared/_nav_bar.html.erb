@@ -1,0 +1,16 @@
+<nav class="navbar navbar-default navbar-fixed-top">
+  <div class="container-fluid">
+    <p class="navbar-brand">
+      <a href=<%= @parent_directory %>>
+        <i class="fa fa-level-up fa-flip-horizontal"></i>
+      </a>
+      <i class="fa fa-folder-open"></i>
+      <%= @name %>
+    </p>
+    <p class="navbar-text navbar-right">
+    <% if @scan_link %>
+      <%= link_to 'Scan Directory', @scan_link %>
+    <% end %>
+    </p>
+  </div>
+</nav>
