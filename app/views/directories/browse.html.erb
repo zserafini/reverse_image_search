@@ -1,32 +1,3 @@
-<script>
-function leftArrowPressed() {
-  window.open('<%= directories_browse_path(path: @directory.next_directory) %>','_self');
-}
-
-function upArrowPressed() {
-  window.open('<%= directories_browse_path(path: @directory.parent_directory.path) %>','_self');
-}
-
-function rightArrowPressed() {
-  window.open('<%= directories_browse_path(path: @directory.previous_directory) %>','_self');
-}
-
-document.onkeydown = function(evt) {
-  evt = evt || window.event;
-  switch (evt.keyCode) {
-    case 37:
-      leftArrowPressed();
-      break;
-    case 38:
-      upArrowPressed();
-      break;
-    case 39:
-      rightArrowPressed();
-      break;
-  }
-};
-</script>
-
 <p id="notice"><%= notice %></p>
 
 <p> <h2> <%=@directory.path%> </h2> <p>

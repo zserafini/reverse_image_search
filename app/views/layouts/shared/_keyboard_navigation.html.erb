@@ -1,0 +1,35 @@
+<script>
+function leftArrowPressed() {
+  window.open('<%= @previous_page %>','_self');
+}
+
+function upArrowPressed() {
+  window.open('<%= @up_page %>','_self');
+}
+
+function rightArrowPressed() {
+  window.open('<%= @next_page %>','_self');
+}
+
+function downArrowPressed() {
+  window.open('<%= @down_page %>', '_self');
+}
+
+document.onkeydown = function(evt) {
+  evt = evt || window.event;
+  switch (evt.keyCode) {
+    case 37:
+      leftArrowPressed();
+      break;
+    case 38:
+      upArrowPressed();
+      break;
+    case 39:
+      rightArrowPressed();
+      break;
+    case 40:
+      downArrowPressed();
+      break;
+  }
+};
+</script>

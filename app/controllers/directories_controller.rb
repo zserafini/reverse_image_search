@@ -6,6 +6,9 @@ class DirectoriesController < ApplicationController
     @scan_link = directories_scan_path(path: @current_path)
     @parent_directory = directories_browse_path(path: @directory.dirname)
     @name = @directory.name
+    @previous_page = directories_browse_path(path: @directory.next_directory) 
+    @next_page = directories_browse_path(path: @directory.previous_directory) 
+    @up_page =directories_browse_path(path: @directory.parent_directory.path) 
   end
 
   def scan
