@@ -12,5 +12,9 @@
  *= require_tree .
  */
 .full-size-image {
-  max-height: 98vh;
+  height: 90vh;
+}
+
+body {
+  padding-top: 65px;
 }

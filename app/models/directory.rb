@@ -12,6 +12,9 @@ class Directory < ActiveRecord::Base
       sort { |x, y| x <=> y }
   end
 
+  def image_count
+    image_paths.length
+  end
 
   def sub_directories
     Dir.entries(path).

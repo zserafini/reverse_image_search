@@ -6,10 +6,16 @@
       </a>
       <i class="fa fa-folder-open"></i>
       <%= @name %>
+      <span class="badge"><%= @name_badge %></span>
     </p>
     <p class="navbar-text navbar-right">
     <% if @scan_link %>
-      <%= link_to 'Scan Directory', @scan_link %>
+      <a href='<%= @scan_link %>'>
+        <button class="btn btn-danger">
+          <i class="fa fa-folder"></i>
+          Scan Directory
+        </button>
+      </a>
     <% end %>
     </p>
   </div>

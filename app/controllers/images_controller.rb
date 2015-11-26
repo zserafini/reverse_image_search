@@ -7,19 +7,22 @@ class ImagesController < ApplicationController
   end
 
   def inline
-    @previous_page = images_inline_path( path: @image.previous_image) 
-    @next_page = images_inline_path( path: @image.next_image) 
-    @up_page = images_find_duplicate_path(path: @image.path) 
+    @name = @image.name
+    @name_badge = "#{@image.directory_position}/#{@image.directory.image_count}"
+    @previous_page = images_inline_path( path: @image.previous_image)
+    @next_page = images_inline_path( path: @image.next_image)
+    @up_page = images_find_duplicate_path(path: @image.path)
   end
 
   def find_duplicate
     @image_count = Image.count
     @parent_directory = directories_browse_path(path: @image.dirname)
     @name = @image.name
-    @down_page = images_inline_path( path: @image.path) 
-    @previous_page = images_find_duplicate_path(path: @image.previous_image) 
-    @next_page = images_find_duplicate_path(path: @image.next_image) 
-    @up_page = directories_browse_path(path: @image.dirname) 
+    @name_badge = "#{@image.directory_position}/#{@image.directory.image_count}"
+    @down_page = images_inline_path( path: @image.path)
+    @previous_page = images_find_duplicate_path(path: @image.previous_image)
+    @next_page = images_find_duplicate_path(path: @image.next_image)
+    @up_page = directories_browse_path(path: @image.dirname)
   end
 
   private
