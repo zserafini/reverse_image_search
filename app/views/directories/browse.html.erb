@@ -8,7 +8,7 @@
   
   <% @directory.images.each do |image| %>
     <a href='<%= images_find_duplicate_path(path: image.path) %>' class="list-group-item">
-      <%= image_tag custom_image_path( path: image.path), height: 200 %>
+      <%= image_tag custom_image_path( path: image.path), height: 100 %>
       <%= image.name %>
       <% if image.duplicates.any? %>
         <span class="label label-danger"><i class="fa fa-files-o"></i></span>

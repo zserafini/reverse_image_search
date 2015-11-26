@@ -1,7 +1,7 @@
 <nav class="navbar navbar-default navbar-fixed-top">
   <div class="container-fluid">
     <p class="navbar-brand">
-      <a href=<%= @parent_directory %>>
+      <a href=<%= @up_page %>>
         <i class="fa fa-level-up fa-flip-horizontal"></i>
       </a>
       <i class="fa fa-folder-open"></i>
@@ -9,14 +9,31 @@
       <span class="badge"><%= @name_badge %></span>
     </p>
     <p class="navbar-text navbar-right">
+    <span class="label label-info">Images Catalogued: <%= Image.count %></span>
+    <% if @background_job_count %>
+      <span class="label label-info">Backgroud Jobs: <%= @background_job_count %></span>
+    <% end %>
     <% if @scan_link %>
-      <a href='<%= @scan_link %>'>
-        <button class="btn btn-danger">
-          <i class="fa fa-folder"></i>
-          Scan Directory
-        </button>
-      </a>
+      <button class="btn btn-danger" data-toggle="modal" data-target="#confirm-scan">
+        <i class="fa fa-folder"></i>
+        Scan Directory
+      </button>
     <% end %>
     </p>
   </div>
 </nav>
+
+<div class="modal fade" id="confirm-scan" tabindex="-1" role="dialog" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-body">
+        Are you really sure you want to do this?
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+        <a class="btn btn-danger btn-ok" href='<%= @scan_link %>'>Scan</a>
+        <a class="btn btn-danger btn-ok" href='<%= @scan_and_clear_link %>'>Clear & Scan</a>
+      </div>
+    </div>
+  </div>
+</div>

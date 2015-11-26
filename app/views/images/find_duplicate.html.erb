@@ -4,10 +4,13 @@
   </a>
 </p>
 
-<h1>Best Matches (5/<%= @image_count %>)</h1>
-
-<% @image.get_closest_matches.each do |image| %>
-  <a href='<%= images_find_duplicate_path( path: image.path) %>'>
-    <%= image_tag custom_image_path( path: image.path), height: 200 %>
-  </a>
-<% end %>
+<div>
+  <% @image.get_closest_matches.each do |image| %>
+    <div class="imagebar-element">
+      <a href='<%= images_find_duplicate_path( path: image.path) %>'>
+        <%= image_tag custom_image_path( path: image.path), height: 200 %>
+        <div><%= @image.relative_path(image) %></div>
+      </a>
+    </div>
+  <% end %>
+<div>

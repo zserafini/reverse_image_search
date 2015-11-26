@@ -4,7 +4,7 @@ class DirectoriesController < ApplicationController
   def browse
     @directory = Directory.find_or_initialize_by(path: @current_path)
     @scan_link = directories_scan_path(path: @current_path)
-    @parent_directory = directories_browse_path(path: @directory.dirname)
+    @scan_and_clear_link = directories_scan_path(path: @current_path, clear: true)
     @name = @directory.name
     @name_badge = @directory.image_count
     @previous_page = directories_browse_path(path: @directory.next_directory) 
@@ -13,6 +13,10 @@ class DirectoriesController < ApplicationController
   end
 
   def scan
+    if params[:clear]
+      Sidekiq::Queue.all.each(&:clear)
+      Image.delete_all
+    end
     FileEnqueuer.perform_async(@current_path)
     render json: { success: "Directory Added To Scan Queue!" }
   end

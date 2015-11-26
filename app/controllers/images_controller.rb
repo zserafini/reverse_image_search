@@ -16,7 +16,6 @@ class ImagesController < ApplicationController
 
   def find_duplicate
     @image_count = Image.count
-    @parent_directory = directories_browse_path(path: @image.dirname)
     @name = @image.name
     @name_badge = "#{@image.directory_position}/#{@image.directory.image_count}"
     @down_page = images_inline_path( path: @image.path)

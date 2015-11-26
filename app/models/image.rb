@@ -24,12 +24,19 @@ class Image < ActiveRecord::Base
     @directory ||= Directory.find_or_initialize_by(path: dirname)
   end
 
+  def pathname
+    Pathname.new(path).cleanpath
+  end
+
   def name
-    Pathname.new(path).basename.to_s
+    pathname.basename.to_s
   end
 
   def dirname
-    Pathname.new(path).cleanpath.dirname.to_s
+    pathname.dirname.to_s
   end
 
+  def relative_path(other_image)
+    other_image.pathname.relative_path_from(pathname)
+  end
 end
