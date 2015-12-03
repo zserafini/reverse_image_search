@@ -18,7 +18,8 @@ class DirectoriesController < ApplicationController
       Image.delete_all
     end
     FileEnqueuer.perform_async(@current_path)
-    render json: { success: "Directory Added To Scan Queue!" }
+    flash[:notice] = 'Successfully enqueued background scan'
+    redirect_to directories_browse_path(path: @current_path)
   end
 
   private

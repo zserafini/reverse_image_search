@@ -39,4 +39,9 @@ class Image < ActiveRecord::Base
   def relative_path(other_image)
     other_image.pathname.relative_path_from(pathname)
   end
+
+  def delete_file!
+    File.delete(pathname.to_s)
+    delete
+  end
 end

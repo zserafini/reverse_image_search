@@ -9,6 +9,7 @@ ReverseImageSearch::Application.routes.draw do
 
   get '/images/find_duplicate', to: 'images#find_duplicate'
   get '/images/inline', to: 'images#inline'
+  get '/images/delete_file', to: 'images#delete_file'
   get '/image/', to: 'images#show', as: :custom_image
 
   mount Sidekiq::Web => '/sidekiq'

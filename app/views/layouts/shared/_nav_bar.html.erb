@@ -11,12 +11,18 @@
     <p class="navbar-text navbar-right">
     <span class="label label-info">Images Catalogued: <%= Image.count %></span>
     <% if @background_job_count %>
-      <span class="label label-info">Backgroud Jobs: <%= @background_job_count %></span>
+      <span class="label label-info">Background Jobs: <%= @background_job_count %></span>
     <% end %>
     <% if @scan_link %>
       <button class="btn btn-danger" data-toggle="modal" data-target="#confirm-scan">
         <i class="fa fa-folder"></i>
         Scan Directory
+      </button>
+    <% end %>
+    <% if @delete_link %>
+      <button class="btn btn-danger" data-toggle="modal" data-target="#confirm-delete">
+        <i class="fa fa-folder"></i>
+        Delete Image
       </button>
     <% end %>
     </p>
@@ -27,12 +33,26 @@
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-body">
-        Are you really sure you want to do this?
+        Are you really sure you want to scan this directory?
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
         <a class="btn btn-danger btn-ok" href='<%= @scan_link %>'>Scan</a>
         <a class="btn btn-danger btn-ok" href='<%= @scan_and_clear_link %>'>Clear & Scan</a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade" id="confirm-delete" tabindex="-1" role="dialog" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-body">
+        Are you really sure you want to delete this image?
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+        <a class="btn btn-danger btn-ok" href='<%= @delete_link %>'>Delete</a>
       </div>
     </div>
   </div>
